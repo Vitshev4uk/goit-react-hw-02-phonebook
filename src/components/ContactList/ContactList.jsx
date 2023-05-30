@@ -2,11 +2,11 @@ import { Component } from 'react';
 
 class ContactList extends Component {
   render() {
-    const { contacts, onContactDelete } = this.props;
+    const { elementsToRender, onContactDelete } = this.props;
 
     return (
       <ul>
-        {contacts.map((contact, id) => {
+        {elementsToRender.map((contact, id) => {
           return (
             <li key={id}>
               <p>
