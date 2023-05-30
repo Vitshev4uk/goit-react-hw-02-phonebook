@@ -37,12 +37,18 @@ class App extends Component {
 
     return (
       <div>
-        <h1>Phonebook</h1>
+        <h1 style={{
+          textAlign: 'center',
+          margin: 15
+        }}>Phonebook</h1>
         <ContactForm
           contacts={contacts}
           updateContacts={this.updateContacts}
         />
-        <h2>Contacts</h2>
+        <h2 style={{
+          textAlign: 'center',
+          margin: 15
+        }}>Contacts</h2>
         <Filter filter={filter} onFilterChange={this.handleInputFilter} />
         <ContactList
           elementsToRender={elementsToRender}
