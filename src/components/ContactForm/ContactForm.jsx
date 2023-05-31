@@ -9,30 +9,25 @@ class ContactForm extends Component {
     number: '',
   };
 
-  onFormSubmit = (event) => {
+  onFormSubmit = event => {
     const { contacts, updateContacts } = this.props;
     event.preventDefault();
     const id = nanoid();
     const { name, number } = this.state;
     const contact = { name, number, id };
+
+    const existingContact = contacts.find(contact => contact.name === name);
+    if (existingContact) {
+      alert(`${name} is already in contacts`);
+      this.setState({ name: '', number: '' });
+      return;
+    }
     const updContacts = [...contacts, contact];
     updateContacts(updContacts);
-    this.findSameName(updContacts);
     this.setState({ name: '', number: '' });
   };
 
-  findSameName = (contacts) => {
-    const sameContacts = contacts.filter(
-      (contact, index, allcontacts) =>
-        index !== allcontacts.findIndex(newcontact => newcontact.name === contact.name)
-    );
-    if (sameContacts.length > 0) {
-      const sameName = sameContacts.map(contact => contact.name);
-      alert(`${sameName} is already in contacts`);
-    }
-  };
-
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
@@ -44,7 +39,7 @@ class ContactForm extends Component {
       <form className={css.Form} onSubmit={this.onFormSubmit}>
         <p className={css.InputName}>Name</p>
         <input
-        className={css.InputForm}
+          className={css.InputForm}
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -56,7 +51,7 @@ class ContactForm extends Component {
         />
         <p className={css.InputName}>Number</p>
         <input
-        className={css.InputForm}
+          className={css.InputForm}
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -66,7 +61,9 @@ class ContactForm extends Component {
           onChange={this.handleInputChange}
           value={number}
         />
-        <button className={css.BtnForm} type="submit">Add contact</button>
+        <button className={css.BtnForm} type="submit">
+          Add contact
+        </button>
       </form>
     );
   }
@@ -75,13 +72,14 @@ class ContactForm extends Component {
 ContactForm.propTypes = {
   // name: PropTypes.string.isRequired,
   // number: PropTypes.number.isRequired,
-   contacts: PropTypes.arrayOf(
+  contacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired
+      number: PropTypes.string.isRequired,
     })
-  ) 
-}
+  ),
+  updateContacts: PropTypes.func.isRequired
+};
 
 export default ContactForm;
