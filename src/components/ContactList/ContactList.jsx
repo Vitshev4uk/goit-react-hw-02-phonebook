@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import css from 'components/ContactList/ContactList.module.css'
+import PropTypes from 'prop-types';
 
 class ContactList extends Component {
   render() {
@@ -27,6 +28,16 @@ class ContactList extends Component {
       </ul>
     );
   }
+}
+
+ContactList.propTypes = {
+  filteredContacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired
+    })
+  ) 
 }
 
 export default ContactList;
