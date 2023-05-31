@@ -3,11 +3,11 @@ import css from 'components/ContactList/ContactList.module.css'
 
 class ContactList extends Component {
   render() {
-    const { elementsToRender, onContactDelete } = this.props;
+    const { filteredContacts, onContactDelete } = this.props;
 
     return (
       <ul className={css.ContactList}>
-        {elementsToRender.map((contact, id) => {
+        {filteredContacts.map((contact, id) => {
           return (
             <li className={css.ContactListItem} key={id}>
               <p className={css.Name}>

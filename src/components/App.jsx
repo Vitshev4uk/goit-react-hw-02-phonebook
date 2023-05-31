@@ -21,37 +21,39 @@ class App extends Component {
   };
 
   handleInputFilter = event => {
-    const { contacts } = this.state;
     const { value } = event.target;
-
-    const filteredContacts = contacts.filter(contact => {
-      return contact.name.toLowerCase().includes(value.toLowerCase());
-    });
-    this.setState({ filter: value, filteredContacts });
+    this.setState({ filter: value });
   };
 
   render() {
-    const { contacts, filter, filteredContacts } = this.state;
+    const { contacts, filter } = this.state;
 
-    const elementsToRender = filter !== '' ? filteredContacts : contacts;
+    const filteredContacts = contacts.filter(contact => {
+      return contact.name.toLowerCase().includes(filter.toLowerCase());
+    });
 
     return (
       <div>
-        <h1 style={{
-          textAlign: 'center',
-          margin: 15
-        }}>Phonebook</h1>
-        <ContactForm
-          contacts={contacts}
-          updateContacts={this.updateContacts}
-        />
-        <h2 style={{
-          textAlign: 'center',
-          margin: 15
-        }}>Contacts</h2>
+        <h1
+          style={{
+            textAlign: 'center',
+            margin: 15,
+          }}
+        >
+          Phonebook
+        </h1>
+        <ContactForm contacts={contacts} updateContacts={this.updateContacts} />
+        <h2
+          style={{
+            textAlign: 'center',
+            margin: 15,
+          }}
+        >
+          Contacts
+        </h2>
         <Filter filter={filter} onFilterChange={this.handleInputFilter} />
         <ContactList
-          elementsToRender={elementsToRender}
+          filteredContacts={filteredContacts}
           onContactDelete={this.removeContact}
         />
       </div>
